@@ -58,11 +58,11 @@ These packages install applications to the system partition, surviving factory r
 
 | Flavor | Contents | Target User |
 |--------|----------|--------------|
-| Pico | 5 handpicked apps, limited access | Minimalists. |
-| Nano | 10 handpicked apps, still limited | Balanced privacy. |
-| Micro | 15 handpicked apps, nearly unlimited | Feature-rich but safe. |
-| Standard | All handpicked apps (no Lucky Patcher) | Full daily-driver experience. |
-| Experimental Dev | Standard plus Lucky Patcher | Tinkerers only. Not for daily use. |
+| Pico | 7 handpicked apps, limited access | Minimalists. |
+| Nano | 12 handpicked apps, still limited | Balanced privacy. |
+| Micro | 23 handpicked apps, nearly unlimited | Feature-rich but safe. |
+| Standard | 23 handpicked apps (no Lucky Patcher, collabora, and Anon messenger) | Full daily-driver experience + optimizations. |
+| Experimental Dev | Standard plus Lucky Patcher and collabora | Tinkerers only. Not for daily use. |
 
 ### Full ROM (Complete operating system)
 
