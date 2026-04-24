@@ -36,7 +36,7 @@ ZeroTrace does not innovate. They rename, relabel, and lie.
 
 | Feature | ZeroTrace | UNTRACEABLE |
 |---------|-----------|--------------|
-| Price | $1200 or more | Free. |
+| Price | $979.00 | Free. |
 | Hardware | Used Pixel (ARM) | ASUS ZenFone 2 Z00AD (x86). |
 | Architecture | ARM with closed blobs | x86 with native Linux binary support. |
 | Operating System | "Ghost OS" (rebranded GrapheneOS) | LineageOS or dotOS (fully auditable). |
