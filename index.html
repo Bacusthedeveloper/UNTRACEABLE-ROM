@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UNTRACEABLE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #111113;
+    --surface: #1a1a1e;
+    --surface2: #222228;
+    --surface3: #2a2a32;
+    --border: #333340;
+    --border-bright: #44445a;
+    --text: #c8c8d4;
+    --text-dim: #7a7a8a;
+    --text-muted: #4a4a5a;
+    --accent: #5a5a7a;
+    --accent-bright: #8080a8;
+    --radio-border: #555570;
+    --radio-check: #a0a0c8;
+    --header-bg: #141418;
+    --header-border: #2a2a38;
+    --btn-bg: #303048;
+    --btn-hover: #3e3e60;
+    --btn-active: #4a4a72;
+    --btn-text: #c0c0e0;
+    --unavail-bg: #1c1c22;
+    --unavail-border: #2a2a36;
+    --unavail-text: #3a3a4a;
+    --col-head: #202028;
+    --root-btn-bg: #2a1a1a;
+    --root-btn-border: #5a3030;
+    --root-btn-hover: #3e2020;
+    --root-btn-text: #c08080;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px #00000080;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 56px;
+  }
+  .logo-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    color: #b0b0cc;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px #6060904a;
+  }
+  .header-nav { display: flex; align-items: center; gap: 4px; }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-link:hover { color: var(--text); background: #ffffff08; }
+  .nav-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* MAIN */
+  main { max-width: 1100px; margin: 0 auto; padding: 36px 20px 80px; }
+  .page-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  /* DOWNLOAD CARD */
+  .download-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px #00000060;
+  }
+
+  /* TABLE LAYOUT */
+  .config-table {
+    display: flex;
+    overflow-x: auto;
+  }
+  .col {
+    flex: 1;
+    min-width: 110px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+  .col:last-child { border-right: none; }
+  .col-head {
+    background: var(--col-head);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 14px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .col-body { padding: 8px 0; flex: 1; }
+
+  /* RADIO */
+  .radio-row {
+    display: flex;
+    align-items: center;
+    padding: 5px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .radio-row:hover:not(.unavailable) { background: #ffffff05; }
+  .radio-row.unavailable { cursor: not-allowed; opacity: 0.38; }
+  .radio-row input[type="radio"] { display: none; }
+  .radio-outer {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--radio-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+    margin-right: 10px;
+  }
+  .radio-inner {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--radio-check);
+    display: none;
+    box-shadow: 0 0 6px var(--radio-check);
+  }
+  .radio-row input[type="radio"]:checked ~ .radio-outer { border-color: var(--radio-check); }
+  .radio-row input[type="radio"]:checked ~ .radio-outer .radio-inner { display: block; }
+  .radio-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .unavailable .radio-label {
+    color: var(--unavail-text);
+    text-decoration: line-through;
+    text-decoration-color: #3a3a4a;
+  }
+  .unavailable .radio-outer {
+    border-color: var(--unavail-border);
+    background: var(--unavail-bg);
+  }
+  .avail-badge {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-left: 6px;
+  }
+
+  /* CHECKBOX (Magisk) */
+  .magisk-wrap {
+    display: none;
+    padding: 0;
+  }
+  .magisk-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 6px 14px;
+  }
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    padding: 5px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .checkbox-row:hover { background: #ffffff05; }
+  .checkbox-row input[type="checkbox"] { display: none; }
+  .chk-outer {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 2px solid var(--radio-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 10px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .chk-inner {
+    font-size: 0.65rem;
+    color: var(--radio-check);
+    display: none;
+    line-height: 1;
+  }
+  .checkbox-row input[type="checkbox"]:checked ~ .chk-outer {
+    border-color: var(--radio-check);
+    background: #3030502a;
+  }
+  .checkbox-row input[type="checkbox"]:checked ~ .chk-outer .chk-inner { display: block; }
+
+  /* PKG / X86 column toggle */
+  .pkg-col { display: none; }
+  .x86-col { display: flex; }
+
+  /* DOWNLOAD FOOTER */
+  .download-footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--col-head);
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .config-summary {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+  }
+  .config-summary span { color: var(--accent-bright); }
+  .unavail-notice {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.78rem;
+    color: #664444;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: none;
+  }
+
+  /* BUTTON GROUP */
+  .btn-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 28px;
+    background: var(--btn-bg);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    color: var(--btn-text);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+    box-shadow: 0 0 14px #3030604a;
+  }
+  .dl-btn:hover:not(.disabled) {
+    background: var(--btn-hover);
+    border-color: var(--accent-bright);
+    box-shadow: 0 0 22px #5050904a;
+  }
+  .dl-btn:active:not(.disabled) { background: var(--btn-active); }
+  .dl-btn.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .dl-btn svg { width: 18px; height: 18px; }
+
+  /* ROOT BUTTON */
+  .root-btn {
+    display: none;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 22px;
+    background: var(--root-btn-bg);
+    border: 1px solid var(--root-btn-border);
+    border-radius: 4px;
+    color: var(--root-btn-text);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 10px #5020204a;
+  }
+  .root-btn:hover {
+    background: var(--root-btn-hover);
+    border-color: #8a4444;
+    box-shadow: 0 0 18px #6030304a;
+  }
+  .root-btn svg { width: 16px; height: 16px; }
+
+  /* SCANLINES */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, #00000008 2px, #00000008 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  @media (max-width: 700px) {
+    .header-nav .nav-text { display: none; }
+    .config-table { flex-direction: column; }
+    .col { border-right: none; border-bottom: 1px solid var(--border); }
+    .col:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-text">UNTRACEABLE</div>
+    <nav class="header-nav">
+      <a class="nav-link" href="https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        <span class="nav-text">GitHub</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-title">ROM Download Center</div>
+  <p class="section-label">Configure &amp; Download</p>
+
+  <div class="download-card">
+    <div class="config-table" id="configTable">
+
+      <!-- COL 1: Platform -->
+      <div class="col">
+        <div class="col-head">Platform</div>
+        <div class="col-body">
+          <label class="radio-row" id="row-x86">
+            <input type="radio" name="platform" value="x86" checked>
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">x86<br><span class="avail-badge">— rom</span></span>
+          </label>
+          <label class="radio-row" id="row-pkg">
+            <input type="radio" name="platform" value="pkg">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">pkg<br><span class="avail-badge">— package</span></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- COL 2a: x86 - Phone -->
+      <div class="col x86-col" id="col-phone">
+        <div class="col-head">Phone</div>
+        <div class="col-body">
+          <label class="radio-row">
+            <input type="radio" name="phone" value="ASUS-Z00AD" checked>
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">ASUS Z00AD</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- COL 2b: pkg - Architecture -->
+      <div class="col pkg-col" id="col-arch">
+        <div class="col-head">Architecture</div>
+        <div class="col-body">
+          <label class="radio-row">
+            <input type="radio" name="arch" value="arm-v7a">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">arm-v7a</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="arch" value="arm-64">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">arm-64</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="arch" value="x86-x86_64" checked>
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">x86/x86_64</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- COL 3a: x86 - Flavor -->
+      <div class="col x86-col" id="col-flavor">
+        <div class="col-head">Flavor</div>
+        <div class="col-body">
+          <label class="radio-row">
+            <input type="radio" name="flavor" value="DOT-OS" checked>
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">DOT-OS</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="flavor" value="LineageOS">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">Lineage OS</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- COL 3b: pkg - ROM Version -->
+      <div class="col pkg-col" id="col-pkgver">
+        <div class="col-head">ROM Version</div>
+        <div class="col-body" id="pkg-ver-body"></div>
+      </div>
+
+      <!-- COL 4a: x86 - Android Version -->
+      <div class="col x86-col" id="col-android">
+        <div class="col-head">Android Version</div>
+        <div class="col-body" id="x86-android-body"></div>
+      </div>
+
+      <!-- COL 5a: x86 - Variant -->
+      <div class="col x86-col" id="col-x86variant">
+        <div class="col-head">Variant</div>
+        <div class="col-body">
+          <label class="radio-row">
+            <input type="radio" name="x86variant" value="pico">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">pico</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="x86variant" value="nano">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">nano</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="x86variant" value="micro">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">micro</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="x86variant" value="standard" checked>
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">standard</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="x86variant" value="full-dev">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">full dev</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- COL 6a: x86 - Boot Variant -->
+      <div class="col x86-col" id="col-boot">
+        <div class="col-head">Boot Variant</div>
+        <div class="col-body">
+          <label class="radio-row">
+            <input type="radio" name="boot" value="original" checked>
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">original</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="boot" value="kali-linux">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">kali-linux</span>
+          </label>
+          <!-- Magisk checkbox: shown only when a valid combo is selected -->
+          <div class="magisk-wrap" id="magiskWrap">
+            <div class="magisk-divider"></div>
+            <label class="checkbox-row">
+              <input type="checkbox" id="magiskCheck">
+              <div class="chk-outer"><div class="chk-inner">&#10003;</div></div>
+              <span class="radio-label">With Magisk<br><span class="avail-badge">— flashable zip</span></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- COL 4b: pkg - Variant -->
+      <div class="col pkg-col" id="col-pkgvariant">
+        <div class="col-head">Variant</div>
+        <div class="col-body">
+          <label class="radio-row">
+            <input type="radio" name="pkgvariant" value="pico">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">pico</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="pkgvariant" value="nano">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">nano</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="pkgvariant" value="micro">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">micro</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="pkgvariant" value="standard" checked>
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">standard</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="pkgvariant" value="full-dev">
+            <div class="radio-outer"><div class="radio-inner"></div></div>
+            <span class="radio-label">full-dev</span>
+          </label>
+        </div>
+      </div>
+
+    </div><!-- end config-table -->
+
+    <!-- DOWNLOAD FOOTER -->
+    <div class="download-footer">
+      <div>
+        <div class="config-summary" id="configSummary"></div>
+        <div class="unavail-notice" id="unavailNotice">&#9888; This combination is not yet available</div>
+      </div>
+      <div class="btn-group">
+        <a class="dl-btn" id="dlBtn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7 7-7z"/></svg>
+          Download
+        </a>
+        <a class="root-btn" id="rootBtn" href="https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/x86ROOT_For_Z00A.zip" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 008 20C19 20 22 3 22 3c-1 2-8 2-8 2s8-1 8 7c0 3-2 6-4 8-1.5 1.5-3 2-3 2-.5-3-1-5-2-6.5C9.5 12 9 17 9 17s-2-2-2-7c0-4 4.5-5 4.5-5S14 5 17 8z"/></svg>
+          Download Root ZIP
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// ─────────────────────────────────────────────
+// LINK MAP
+// Key format x86:  "x86|PHONE|FLAVOR|VERSION|VARIANT|BOOT"
+// Key format pkg:  "pkg|ARCH|PKGVER|PKGVARIANT"
+// Leave value "" to mark unavailable.
+// ─────────────────────────────────────────────
+const LINKS = {};
+const ROOT_ZIP_URL = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/x86ROOT_For_Z00A.zip";
+
+// x86 combos
+const phones   = ['ASUS-Z00AD'];
+const flavors  = ['DOT-OS', 'LineageOS'];
+const versions = ['Version 2','Version 3','Version 4','Version 5','Version 6',
+                  'Version 7','Version 8','Version 9','Version 10','Version 11',
+                  'Version 12','Version 13'];
+const x86vars  = ['pico','nano','micro','standard','full-dev'];
+const boots    = ['original','kali-linux'];
+
+for (const ph of phones)
+  for (const fl of flavors)
+    for (const vr of versions)
+      for (const xv of x86vars)
+        for (const bt of boots)
+          LINKS[`x86|${ph}|${fl}|${vr}|${xv}|${bt}`] = "";
+
+// Filled x86 — kali-linux boot
+LINKS['x86|ASUS-Z00AD|DOT-OS|Version 2|pico|kali-linux']     = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/PICO_Z00AD.zip";
+LINKS['x86|ASUS-Z00AD|DOT-OS|Version 2|nano|kali-linux']     = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/NANO_Z00AD.zip";
+LINKS['x86|ASUS-Z00AD|DOT-OS|Version 2|micro|kali-linux']    = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/MICRO_Z00AD.zip";
+LINKS['x86|ASUS-Z00AD|DOT-OS|Version 2|standard|kali-linux'] = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/STANDARD_Z00AD.zip";
+
+// Filled x86 — original boot
+LINKS['x86|ASUS-Z00AD|DOT-OS|Version 2|pico|original']       = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/PICO_UBOOT_Z00AD.zip";
+LINKS['x86|ASUS-Z00AD|DOT-OS|Version 2|nano|original']       = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/NANO_UBOOT_Z00AD.zip";
+LINKS['x86|ASUS-Z00AD|DOT-OS|Version 2|micro|original']      = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/MICRO_UBOOT_Z00AD.zip";
+LINKS['x86|ASUS-Z00AD|DOT-OS|Version 2|standard|original']   = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2/STANDARD_UBOOT_Z00AD.zip";
+
+// pkg combos
+const archs   = ['arm-v7a','arm-64','x86-x86_64'];
+const pkgvers = ['Version 2','Version 3','Version 4','Version 5','Version 6',
+                 'Version 7','Version 8','Version 9','Version 10','Version 11','Version 12'];
+const pkgvars = ['pico','nano','micro','standard','full-dev'];
+
+for (const ar of archs)
+  for (const pv of pkgvers)
+    for (const pk of pkgvars)
+      LINKS[`pkg|${ar}|${pv}|${pk}`] = "";
+
+// Filled pkg — x86/x86_64, Version 2
+LINKS['pkg|x86-x86_64|Version 2|pico']     = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2_package/UNTRACEABLE_v2_pico.zip";
+LINKS['pkg|x86-x86_64|Version 2|nano']     = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2_package/UNTRACEABLE_v2_nano.zip";
+LINKS['pkg|x86-x86_64|Version 2|micro']    = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2_package/UNTRACEABLE_v2_micro.zip";
+LINKS['pkg|x86-x86_64|Version 2|standard'] = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2_package/UNTRACEABLE_v2_standard.zip";
+LINKS['pkg|x86-x86_64|Version 2|full-dev'] = "https://github.com/Bacusthedeveloper/UNTRACEABLE-ROM/releases/download/UNTRACEABLEV2_package/UNTRACEABLE_v2_ultra_dev.zip";
+
+// ─────────────────────────────────────────────
+// BUILD DYNAMIC RADIO LISTS
+// ─────────────────────────────────────────────
+function makeRadioList(containerId, name, items, defaultVal) {
+  const body = document.getElementById(containerId);
+  body.innerHTML = '';
+  items.forEach(item => {
+    const label = document.createElement('label');
+    label.className = 'radio-row';
+    const checked = item === defaultVal ? 'checked' : '';
+    label.innerHTML = `
+      <input type="radio" name="${name}" value="${item}" ${checked}>
+      <div class="radio-outer"><div class="radio-inner"></div></div>
+      <span class="radio-label">${item}</span>
+    `;
+    body.appendChild(label);
+  });
+}
+
+makeRadioList('x86-android-body', 'android', versions, 'Version 2');
+makeRadioList('pkg-ver-body', 'pkgver', pkgvers, 'Version 2');
+
+// ─────────────────────────────────────────────
+// SHOW / HIDE COLUMN GROUPS
+// ─────────────────────────────────────────────
+function setPlatform(val) {
+  document.querySelectorAll('.x86-col').forEach(c => c.style.display = val === 'x86' ? 'flex' : 'none');
+  document.querySelectorAll('.pkg-col').forEach(c => c.style.display = val === 'pkg' ? 'flex' : 'none');
+  // Hide magisk when switching to pkg
+  if (val === 'pkg') {
+    document.getElementById('magiskWrap').style.display = 'none';
+    document.getElementById('magiskCheck').checked = false;
+    document.getElementById('rootBtn').style.display = 'none';
+  }
+}
+
+// ─────────────────────────────────────────────
+// GET CURRENT SELECTION
+// ─────────────────────────────────────────────
+function getVal(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+
+// ─────────────────────────────────────────────
+// BUILD SUMMARY + TOGGLE BUTTONS
+// ─────────────────────────────────────────────
+function updateDownload() {
+  const platform = getVal('platform');
+  let key, parts;
+
+  if (platform === 'x86') {
+    const phone   = getVal('phone')      || '';
+    const flavor  = getVal('flavor')     || '';
+    const android = getVal('android')    || '';
+    const variant = getVal('x86variant') || '';
+    const boot    = getVal('boot')       || '';
+    key = `x86|${phone}|${flavor}|${android}|${variant}|${boot}`;
+    parts = [
+      ['Platform', 'x86'], ['Phone', phone], ['Flavor', flavor],
+      ['Version', android], ['Variant', variant], ['Boot', boot],
+    ];
+  } else {
+    const arch   = getVal('arch')       || '';
+    const pkgver = getVal('pkgver')     || '';
+    const pkgvar = getVal('pkgvariant') || '';
+    key = `pkg|${arch}|${pkgver}|${pkgvar}`;
+    parts = [
+      ['Platform', 'pkg'], ['Arch', arch],
+      ['Version', pkgver], ['Variant', pkgvar],
+    ];
+  }
+
+  const url    = LINKS[key];
+  const avail  = url !== undefined && url !== '';
+  const notice = document.getElementById('unavailNotice');
+  const btn    = document.getElementById('dlBtn');
+  const sumEl  = document.getElementById('configSummary');
+  const magiskWrap = document.getElementById('magiskWrap');
+  const magiskCheck = document.getElementById('magiskCheck');
+  const rootBtn = document.getElementById('rootBtn');
+
+  sumEl.innerHTML = parts.map(([k, v]) => `${k}: <span>${v}</span>`).join(' &nbsp;&middot;&nbsp; ');
+
+  if (!avail) {
+    notice.style.display = 'block';
+    btn.classList.add('disabled');
+    btn.removeAttribute('href');
+    // Hide magisk + root btn when unavailable
+    magiskWrap.style.display = 'none';
+    magiskCheck.checked = false;
+    rootBtn.style.display = 'none';
+  } else {
+    notice.style.display = 'none';
+    btn.classList.remove('disabled');
+    btn.href = url;
+    // Show magisk checkbox only on x86
+    if (platform === 'x86') {
+      magiskWrap.style.display = 'block';
+    }
+  }
+
+  // Root button visibility depends on checkbox
+  if (platform === 'x86' && avail && magiskCheck.checked) {
+    rootBtn.style.display = 'inline-flex';
+    rootBtn.href = ROOT_ZIP_URL;
+  } else {
+    rootBtn.style.display = 'none';
+  }
+}
+
+// ─────────────────────────────────────────────
+// EVENT LISTENERS
+// ─────────────────────────────────────────────
+document.addEventListener('change', e => {
+  if (e.target.name === 'platform') {
+    setPlatform(e.target.value);
+    const archDefault = document.querySelector('input[name="arch"][value="x86-x86_64"]');
+    if (archDefault) archDefault.checked = true;
+  }
+  updateDownload();
+});
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+setPlatform('x86');
+updateDownload();
+</script>
+</body>
+</html>
