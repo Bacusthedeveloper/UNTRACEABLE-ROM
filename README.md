@@ -108,14 +108,19 @@ More devices may be added in the future. For now, this ROM is built specifically
 
 ---
 
-## Coming Soon: Universal x86 App Pack
+## Universal x86 App Pack
 
-I am going to add a universal x86 flashable package that installs only the apps, not the full software, for all x86 Android devices.
+I added a universal x86 flashable package that installs only the apps, not the full software, for all x86 Android devices.
 
 This means any x86 Android device (tablets, other phones, or Chromebooks running Android) can flash just the App Pack and get the same system-level integration and ZeroTrace-exposing experience without changing the underlying ROM.
 
-ARM users are not supported. Read the warnings.
+ARM users are not supported for now. Read the warnings.... 
 
+---
+
+## Dev Note
+
+One thing to note about the Stingray app in ZeroTrace, for those who wants to know, its an app called: Privacy Cell. the bad news is that the DOT-OS flavored ROM plus the app pack doesnt have those yet cause its android 11+. and i seem to have not find any alternatives or any reliable alternatives for Privacy Cell so i might need to make one for that if i can. but if you dont want to get tracked on Stingrays but only use wifi on your x86 phone, simply dissasemble the phone and remove the GSM cable [the long black/grey/blue/red/green/yellow wire that connects to the three pin antenna connector] and save that cable for later and reassemble it. this way, the IMSI catcher wont spy on you cause youre removing the phone's ability to send and recieve GSM data.
 ---
 
 ## License and Ethics
